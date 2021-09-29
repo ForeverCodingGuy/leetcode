@@ -1,0 +1,59 @@
+class Solution {
+private:
+    int RBorder(vector<int>& nums,int target)
+    {
+        int left=0;
+        int right=nums.size()-1;
+        int rBorder=-2;
+        while(left<=right)
+        {
+            int mid=(left+right)/2;
+            if(nums[mid]>target)
+            {
+                right=mid-1;
+            }
+            else
+            {
+                left=mid+1;
+                rBorder=left;
+            }
+        }
+        return rBorder;
+    }
+    int LBorder(vector<int>& nums,int target)
+    {
+        int left=0;
+        int right=nums.size()-1;
+        int lBorder=-2;
+        while(left<=right)
+        {
+            int mid=(left+right)/2;
+            if(nums[mid]<target)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid-1;
+                lBorder=right;
+            }
+        }
+        return lBorder;
+    }
+public:
+    vector<int> searchRange(vector<int>& nums, int target) 
+    {
+        int lBorder=LBorder(nums,target);
+        int rBorder=RBorder(nums,target);
+        if(lBorder==-2||rBorder==-2)
+        {
+            return {-1,-1};
+        }
+        if(rBorder-lBorder>1)
+        {
+            return {lBorder+1,rBorder-1};
+        }
+        return {-1,-1};
+    }
+
+};
