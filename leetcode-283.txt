@@ -1,0 +1,20 @@
+//快慢指针
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) 
+    {
+        int slowPtr=0;
+        int fastPtr;
+        for(fastPtr=0;fastPtr<nums.size();fastPtr++)
+        {
+            if(nums[fastPtr]!=0)
+            {
+                nums[slowPtr++]=nums[fastPtr];
+            }
+        }
+        for(;slowPtr<nums.size();slowPtr++)
+            {
+                nums[slowPtr]=0;
+            }
+    }
+};
