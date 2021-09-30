@@ -1,0 +1,86 @@
+//利用栈的特性（先进后出，有点像表达式求值）
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) 
+    {
+        string S;
+        string T;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='#')
+            {
+                S+=s[i];
+            }
+            else if(!S.empty())
+            {
+                S.pop_back();
+            }
+        }
+        for(int j=0;j<t.size();j++)
+        {
+            if(t[j]!='#')
+            {
+                T+=t[j];
+            }
+            else if(!T.empty())
+            {
+                T.pop_back();
+            }
+        }
+        if(S==T)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+
+//双指针
+class Solution {
+public:
+    void next(const string &S,int &i,int &cs)
+    {
+        while(i>=0)
+        {
+            if(S[i]=='#')
+            {
+                cs++;
+            }
+            else if(cs)
+            {
+                cs--;
+            }
+            else
+            {
+                break;
+            }
+            i--;
+        }
+    }
+    bool backspaceCompare(string s, string t) 
+    {
+        int i=s.size()-1;
+        int j=t.size()-1;
+        int cs=0;
+        int ct=0;
+        while(i>=0||j>=0)
+        {
+            next(s,i,cs);
+            next(t,j,ct);
+            if(i<0||j<0)
+            {
+                break;
+            }
+            if(s[i--]!=t[j--])
+            {
+
+                return false ;
+            }
+        }
+        if((i==-1)&&(j==-1))
+        {
+            return true;
+        }
+        return false;
+    }
+};
