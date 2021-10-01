@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) 
+    {
+        int sz=matrix.size();
+        vector<bool> row(sz,false);
+        vector<bool> col(sz,false);
+        for(auto i=0;i<sz;i++)
+        {
+            for(auto j=0;j<matrix[i].size();j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    row[i]=true;
+                    col[j]=true;
+                }
+            }
+        }
+        for(auto k=0;k<sz;k++)
+        {
+            for(auto m=0;m<matrix[k].size();m++)
+            {
+                if(row[k]||col[m])
+                {
+                    matrix[k][m]=0;
+                }
+            }
+        }
+    }
+};
