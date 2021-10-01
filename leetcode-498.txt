@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) 
+    {
+        vector<int> tem;
+        int sz=mat.size()+mat[0].size()-1;
+        int row=mat.size()-1;
+        int col=mat[0].size()-1;
+        int k=0;
+        int l=0;
+        for(int i=0;i<sz;i++)
+        {
+            if(i%2==0)
+            {
+                for(int j=k;j>=i-l;j--)
+                {
+                    tem.push_back(mat[j][i-j]);
+                }
+            }
+            else
+            {
+                for(int n=l;n>=i-k;n--)
+                {
+                    tem.push_back(mat[i-n][n]);
+                }
+            }
+            k=((k+1)>row?row:(k+1));
+            l=((l+1)>col?col:(l+1));
+        }
+        return tem;
+    }
+};
