@@ -1,0 +1,31 @@
+//滑动窗口
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) 
+    {
+        int left=0;
+        int right=0;
+        int len=0;
+        int l=fruits[left];
+        int r=fruits[right];
+        for(int right=0;right<fruits.size();right++)
+        {
+            if((fruits[right]==l)||(fruits[right]==r))
+            {
+                len=max(len,right-left+1);
+            }
+            else
+            {
+                left=right-1;
+                l=fruits[left];
+                r=fruits[right];
+                while(left>=1&&fruits[left-1]==l)
+                {
+                    left--;
+                }
+                len=max(len,right-left+1);
+            }
+        }
+        return len;
+    }
+};
