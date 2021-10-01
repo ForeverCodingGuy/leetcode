@@ -1,0 +1,27 @@
+class Solution {
+public:
+    static bool cmp(vector<int>& a,vector<int>& b)
+    {
+        return a[0]<b[0];
+    }
+    vector<vector<int>> merge(vector<vector<int>>& intervals) 
+    {
+        sort(intervals.begin(),intervals.end(),cmp);
+        vector<vector<int>> tem;
+        tem.push_back(intervals[0]);
+        int i=0;
+        for(int j=i+1;j<intervals.size();j++)
+        {
+            if(intervals[j][0]<=tem[i][1])
+            {
+                tem[i][1]=max(tem[i][1],intervals[j][1]);
+            }
+            else
+            {
+                tem.push_back(intervals[j]);
+                i++;
+            }
+        }
+        return tem;
+    }
+};
