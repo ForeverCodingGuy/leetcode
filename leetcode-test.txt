@@ -1,0 +1,39 @@
+/暴力求解：
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val)
+    {
+        int sz=nums.size();
+        for(int i=0;i<sz;i++)
+        {
+            if(nums[i]==val)
+            {
+                for(int j=i+1;j<sz;j++)
+                {
+                    nums[j-1]=nums[j];
+                }
+                sz--;
+                i--;
+            }
+        }
+        return sz;
+    }
+};
+
+//快慢指针
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) 
+    {
+        int slowPtr=0;
+        int fastPtr;
+        for(fastPtr=0;fastPtr<nums.size();fastPtr++)
+        {
+            if(nums[fastPtr]!=val)
+            {
+                nums[slowPtr++]=nums[fastPtr];
+            }
+        }
+        return slowPtr;
+    }
+};
