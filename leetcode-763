@@ -1,0 +1,51 @@
+题解1：
+class Solution {
+public:
+    vector<int> partitionLabels(string s)
+    {
+        int cnt[27]={0};
+        for(int i=0;i<s.size();i++)
+        {
+            cnt[s[i]-'a']=i;
+        }
+        vector<int> rsu;
+        int left=0;
+        int right=0;
+        for(int j=0;j<s.size();j++)
+        {
+            right=max(right,cnt[s[j]-'a']);
+            if(j==right)
+            {
+                rsu.push_back(right-left+1);
+                left=right+1;
+            }
+        }
+        return rsu;
+    }
+};
+
+题解2：
+class Solution {
+public:
+    vector<int> partitionLabels(string s) 
+    {
+        map<char,int> m;
+        for(int i=0;i<s.size();i++)
+        {
+            m[s[i]]=i;
+        }
+        vector<int> v;
+        int left=0;
+        int right=0;
+        for(int j=0;j<s.size();j++)
+        {
+            right=max(right,m[s[j]]);
+            if(right==j)
+            {
+                v.push_back(right-left+1);
+                left=right+1;
+            }
+        }
+        return v;
+    }
+};
