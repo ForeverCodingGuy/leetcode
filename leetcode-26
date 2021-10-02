@@ -1,0 +1,21 @@
+//快慢指针
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) 
+    {
+       int slowPtr=0;
+       int fastPtr;
+       if(nums.size()==0)
+       {
+           return 0;
+       }
+       for(fastPtr=1;fastPtr<nums.size();fastPtr++)
+       {
+           if(nums[fastPtr]!=nums[slowPtr])
+           {
+               nums[++slowPtr]=nums[fastPtr];
+           }
+       }
+       return slowPtr+1;
+    }
+};
