@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) 
+    {
+        int startx=0;
+        int starty=0;
+        int row=matrix.size();
+        int col=matrix[0].size();
+        int minedge=min(row,col);
+        int loop=minedge/2;
+        int offset=1;
+        int cnt=loop;
+        vector<int> tem;
+        int i,j;
+        if(row==1)
+        {
+          return matrix[0];
+        }
+        if(col==1)
+        {
+            for(i=0;i<row;i++)
+            {
+                tem.push_back(matrix[i][0]);
+            }
+            return tem;
+        }
+        while(loop--)
+        {
+            for(j=starty;j<starty+col-offset;j++)
+            {
+                tem.push_back(matrix[startx][j]);
+            }
+            for(i=startx;i<startx+row-offset;i++)
+            {
+                tem.push_back(matrix[i][j]);
+            }
+            for(;j>starty;j--)
+            {
+                tem.push_back(matrix[i][j]);
+            }
+            for(;i>startx;i--)
+            {
+                tem.push_back(matrix[i][j]);
+            }
+            startx++;
+            starty++;
+            offset+=2;
+        }
+        if((row%2||col%2)&&minedge%2!=0)
+        {
+            if(row<col)
+            {
+                for(j=starty;j<=starty+col-offset;j++)
+                {
+                    tem.push_back(matrix[startx][j]);
+                }
+            }
+            else
+            {
+                for(i=startx;i<=startx+row-offset;i++)
+                {
+                    tem.push_back(matrix[i][starty]);
+                }
+            }
+        }
+        return tem;
+    }
+};
