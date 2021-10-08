@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int get_sum(int n)
+    {
+        int sum=0;
+        while(n)
+        {
+            int cnt=n%10;
+            sum+=cnt*cnt;
+            n/=10;
+        }
+        return sum;
+    }
+    bool isHappy(int n) 
+    {
+        unordered_set<int> s;
+        while(1)
+        {
+            int sum=get_sum(n);
+            if(sum==1)
+            {
+                return true;
+            }
+            if(s.find(sum)!=s.end())
+            {
+                return false;
+            }
+            s.insert(n);
+            n=sum;
+        }
+        return true;
+    }
+};
