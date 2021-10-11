@@ -1,0 +1,51 @@
+class MyQueue {
+public:
+    stack<int> IN;
+    stack<int> OUT;
+    MyQueue() {
+
+    }
+    
+    void push(int x) {
+        IN.push(x);
+    }
+    
+    int pop() {
+        if(OUT.empty())
+        {
+            while(!IN.empty())
+            {
+                OUT.push(IN.top());
+                IN.pop();
+            }
+        }
+        int result = OUT.top();
+        OUT.pop();
+        return result;
+    }
+    
+    int peek() {
+        if(OUT.empty())
+        {
+            while(!IN.empty())
+            {
+                OUT.push(IN.top());
+                IN.pop();
+            }
+        }
+        return OUT.top();
+    }
+    
+    bool empty() {
+        return IN.empty()&&OUT.empty();
+    }
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
