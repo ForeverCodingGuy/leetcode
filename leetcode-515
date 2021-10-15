@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) 
+    {
+        vector<int> rsu;
+        if(root)
+        {
+            queue<TreeNode*> que;
+            que.push(root);
+            while(!que.empty())
+            {
+                int sz = que.size();
+                TreeNode* ptn;
+                int max = INT_MIN;
+                for(int i = 0;i < sz;i++)
+                {
+                    ptn = que.front();
+                    que.pop();
+                    if(ptn -> val > max)
+                    {
+                        max = ptn -> val;
+                    }
+                    if(ptn -> left) que.push(ptn -> left);
+                    if(ptn -> right) que.push(ptn -> right);
+                }
+                rsu.push_back(max);
+            }
+        }
+        return rsu;
+    }
+};
+返回该题
+力扣 LeetCode
+竞赛
+LeetBook
+讨论社区
