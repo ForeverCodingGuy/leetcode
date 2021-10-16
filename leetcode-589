@@ -1,0 +1,49 @@
+//1>iteration
+class Solution {
+public:
+    vector<int> preorder(Node* root) 
+    {
+        vector<int> rsu;
+        if(!root) return rsu;
+        stack<Node*> stk;
+        stk.push(root);
+        while(!stk.empty())
+        {
+            Node* ptn = stk.top();
+            stk.pop();
+            if(ptn)
+            {
+                int sz = ptn -> children.size();
+                for(int i = sz - 1;i >= 0;i--)
+                {
+                    if(ptn -> children[i]) stk.push(ptn -> children[i]);
+                }
+                stk.push(ptn);
+                stk.push(nullptr);
+            }
+            else{
+                Node* tem = stk.top();
+                stk.pop();
+                rsu.push_back(tem -> val);
+            }
+        }
+        return rsu;
+    }
+};
+
+//2>recursion
+class Solution {
+public:
+    vector<int> rsu;
+    vector<int> preorder(Node* root) 
+    {
+        if(!root) return rsu;
+        rsu.push_back(root -> val);
+        int sz = root -> children.size();
+        for(int i = 0; i < sz;i++)
+        {
+            preorder(root->children[i]);
+        }
+        return rsu;
+    }
+};
