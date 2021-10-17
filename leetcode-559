@@ -1,4 +1,4 @@
-/*
+//1>iteration
 // Definition for a Node.
 class Node {
 public:
@@ -44,3 +44,21 @@ public:
         return depth;
     }
 };
+
+//2>recursion
+class Solution {
+public:
+   
+    int maxDepth(Node* root) 
+    {
+        if(root == nullptr) return 0;
+        int sz = root -> children.size();
+        int depth = 0;
+        for(int i = 0;i < sz;i++)
+        {
+            depth = max(depth , maxDepth(root -> children[i]));
+        }
+        return depth + 1;
+    }
+};
+
