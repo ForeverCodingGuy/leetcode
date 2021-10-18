@@ -1,0 +1,46 @@
+//1>recursion
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int countNodes(TreeNode* root) 
+    {
+        if(root == nullptr) return 0;
+        return 1 + countNodes(root -> left) + countNodes(root -> right);
+    }
+};
+
+//2>iteration
+class Solution {
+public:
+    int countNodes(TreeNode* root) 
+    {
+        if(root == nullptr) return 0;
+        queue<TreeNode*> que;
+        que.push(root);
+        int rsu = 0;
+        while(!que.empty())
+        {
+            int sz = que.size();
+            TreeNode * tem ;
+            rsu += sz;
+            for(int i = 0;i < sz;i++)
+            {
+                tem = que.front();
+                que.pop();
+                if(tem->left) que.push(tem->left);
+                if(tem->right) que.push(tem -> right);
+            }
+        }
+        return rsu;
+    }
+};
