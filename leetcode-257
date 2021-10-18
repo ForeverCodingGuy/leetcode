@@ -1,0 +1,75 @@
+1>iteration
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) 
+    {
+        stack<string> spath;
+        stack<TreeNode*> stk;
+        vector<string> rsu;
+        if(root == nullptr) return rsu;
+        stk.push(root);
+        spath.push(to_string(root->val));
+        while(!stk.empty())
+        {
+            TreeNode* cur = stk.top();
+            stk.pop();
+            string path = spath.top();
+            spath.pop();
+            if(cur -> left == nullptr && cur -> right == nullptr)
+            {
+                rsu.push_back(path);
+            }
+            if(cur -> left)
+            {
+                stk.push(cur -> left);
+                spath.push(path + "->" + to_string(cur -> left -> val));
+            }
+            if(cur -> right)
+            {
+                stk.push(cur -> right);
+                spath.push(path + "->" + to_string(cur -> right->val));
+            }
+        }
+        return rsu;
+    }
+};
+
+
+//2>recursion
+class Solution {
+public:
+    void traversal(TreeNode* cur,vector<int>& path,vector<string>& rsu)
+    {
+        path.push_back(cur -> val);
+        if(cur->left==nullptr && cur->right==nullptr) 
+        {
+            string spath;
+            for(int i = 0 ;i < path.size()-1;i++)
+            {
+                spath += to_string(path[i]);
+                spath += "->";
+            }
+            spath += to_string(path[path.size() - 1]);
+            rsu.push_back(spath);
+            return ;
+        }
+        if(cur -> left) 
+        {
+            traversal(cur->left,path,rsu);
+            path.pop_back();
+        }
+        if(cur -> right)
+        {
+            traversal(cur->right,path,rsu);
+            path.pop_back();
+        }
+    }
+    vector<string> binaryTreePaths(TreeNode* root) 
+    {
+        vector<string> rsu;
+        vector<int> path;
+        if(root == nullptr) return rsu;
+        traversal(root,path,rsu);
+        return rsu;
+    }
+};
