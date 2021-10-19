@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool cmp(TreeNode* p,TreeNode* q)
+    {
+        if(p == nullptr && q == nullptr) return true;
+        if(p == nullptr || q == nullptr) return false;
+        if(p-> val != q-> val) return false;
+        return cmp(p->left,q->left) && cmp(p->right,q->right);
+    }
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) 
+    {
+        if(root == nullptr && subRoot == nullptr) return true;
+        queue<TreeNode*> que;
+        que.push(root);
+        while(!que.empty())
+        {
+            TreeNode* ptn = que.front();
+            que.pop();
+            if(cmp(ptn,subRoot)) return true;
+            if(ptn->left) que.push(ptn -> left);
+            if(ptn->right) que.push(ptn ->right);
+        }
+        return false;
+    }
+};
