@@ -1,0 +1,53 @@
+//1>recursion
+class Solution {
+public:
+    bool traversal(TreeNode* ptn,int count)
+    {
+        if(ptn -> left == nullptr && ptn -> right == nullptr && count == 0) return true;
+        if(ptn -> left == nullptr && ptn -> right == nullptr) return false;
+        if(ptn -> left)
+        {
+            if(traversal(ptn -> left,count - ptn -> left -> val)) return true;
+        }
+        if(ptn -> right)
+        {
+            if(traversal(ptn -> right,count - ptn -> right -> val)) return true;
+        }
+        return false;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) 
+    {
+        if(root == nullptr) return false;
+        return traversal(root,targetSum - root -> val);
+    }
+};
+
+//2>iteration
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) 
+    {
+        if(root == nullptr) return false;
+        stack<pair<TreeNode* ,int>> stk;
+        stk.push(pair<TreeNode*,int>(root,root -> val));
+        while(!stk.empty())
+        {
+            pair<TreeNode*,int> pa = stk.top();
+            stk.pop();
+            TreeNode* fir = pa.first;
+            if(fir -> left == nullptr && fir -> right == nullptr && pa.second == targetSum)
+            {
+                return true;
+            }
+            if(fir -> left)
+            {
+                stk.push(pair<TreeNode*,int> (fir -> left,pa.second + fir -> left -> val));
+            }
+            if(fir -> right)
+            {
+                stk.push(pair<TreeNode*,int>(fir->right,pa.second + fir -> right -> val));
+            }
+        }
+        return false;
+    }
+};
