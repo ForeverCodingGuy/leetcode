@@ -1,0 +1,61 @@
+//1>recursion
+
+class Solution {
+public:
+    int maxlen = INT_MIN;
+    int leftcnt ;
+    void traversal(TreeNode* ptn,int len)
+    {
+        if(ptn -> left == nullptr && ptn -> right == nullptr)
+        {
+            if(len > maxlen)
+            {
+                maxlen = len;
+                leftcnt = ptn -> val;
+                return ;
+            }
+        }
+        if(ptn -> left)
+        {
+            len++;
+            traversal(ptn->left,len);
+            --len;
+        }
+        if(ptn -> right)
+        {
+            ++len;
+            traversal(ptn -> right,len);
+            --len;
+        }
+    }
+    int findBottomLeftValue(TreeNode* root) 
+    {
+        traversal(root,0);
+        return leftcnt;
+    }
+};
+
+//2>iteration
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) 
+    {
+        queue<TreeNode*> que;
+        que.push(root);
+        int rsu;
+        while(!que.empty())
+        {
+            int sz = que.size();
+            for(int i = 0;i < sz;i++)
+            {
+                TreeNode* ptn = que.front();
+                if(i == 0) rsu = ptn -> val;
+                que.pop();
+                if(ptn -> left) que.push(ptn -> left);
+                if(ptn -> right) que.push(ptn -> right);
+            }
+        }
+        return rsu;
+    }
+};
