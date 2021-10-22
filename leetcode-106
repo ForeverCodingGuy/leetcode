@@ -1,0 +1,42 @@
+class Solution {
+public:
+    TreeNode* traversal(vector<int> & inorder,int inbegin,int inend,
+             vector<int> & postorder,int postbegin,int postend)
+             {
+                 if(postbegin == postend) return nullptr;
+
+                 int rootvalue = postorder[postend - 1];
+                 TreeNode* root = new TreeNode(rootvalue);
+
+                 if(postbegin == postend - 1) return root;
+
+                 int miterindex ;
+                 for(int i = 0;i < inorder.size();i++)
+                 {
+                     if(inorder[i] == rootvalue) miterindex = i;
+                 }
+
+                 int leftinbegin = inbegin;
+                 int leftinend = miterindex;
+                 int rightinbegin = miterindex + 1;
+                 int rightinend = inend;
+
+                 int leftpostbegin = postbegin;
+                 int leftpostend = leftpostbegin + miterindex - leftinbegin;
+                 int rightpostbegin = leftpostend;
+                 int rightpostend = postend - 1;
+
+                 root -> left = traversal(inorder,leftinbegin,leftinend,postorder,
+                 leftpostbegin,leftpostend);
+
+                 root -> right = traversal(inorder,rightinbegin,rightinend,
+                 postorder,rightpostbegin,rightpostend);
+
+                 return root;
+             }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) 
+    {
+        if(inorder.size() == 0 || postorder.size() == 0) return nullptr;
+        return traversal(inorder,0,inorder.size(),postorder,0,postorder.size());
+    }
+};
