@@ -1,0 +1,80 @@
+//1>recursion
+class Solution {
+public:
+    int count = 0;
+    int max_count = 0;
+    TreeNode* pre = nullptr;
+    vector<int> rsu;
+    void traversal(TreeNode* cur)
+    {
+        if(cur == nullptr) return;
+        traversal(cur -> left);
+
+        if(pre == nullptr) count = 1;
+        else if(pre -> val == cur -> val) ++count;
+        else count = 1;
+
+        pre = cur;
+        
+        if(count == max_count) rsu.push_back(cur -> val);
+        if(count > max_count)
+        {
+            max_count = count;
+            rsu.clear();
+            rsu.push_back(cur -> val);
+        }
+
+        traversal(cur -> right);
+    }
+    vector<int> findMode(TreeNode* root) 
+    {
+        if(root == nullptr) return rsu;
+        traversal(root);
+        return rsu;
+    }
+};
+
+//2>iteration
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) 
+    {
+        vector<int> rsu;
+        if(root == nullptr) return rsu;
+        stack<TreeNode*> st;
+        int count = 0;
+        int max_count = 0;
+        TreeNode* cur = root;
+        TreeNode* pre = nullptr;
+        while(cur || !st.empty())
+        {
+            if(cur) 
+            {
+                st.push(cur);
+                cur = cur -> left;
+            }
+            else
+            {
+                cur = st.top();
+                st.pop();
+                
+                if(pre == nullptr) count = 1;
+                else if(pre -> val == cur -> val) ++count;
+                else count = 1;
+
+                pre = cur;
+
+                if(count == max_count) rsu.push_back(cur -> val);
+                else if(count > max_count)
+                {
+                    rsu.clear();
+                    rsu.push_back(cur -> val);
+                    max_count = count;
+                }
+
+                cur = cur -> right;
+            }
+        }
+        return rsu;
+    }
+};
