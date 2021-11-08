@@ -1,0 +1,41 @@
+//1>recursion
+class Solution {
+public:
+    TreeNode* traversal(vector<int>& nums,int l,int r)
+    {
+        if(l > r) return nullptr;
+        int mid = l + (r - l) / 2;
+        TreeNode* root = new TreeNode(nums[mid]);
+        root -> left = traversal(nums,l,mid - 1);
+        root -> right = traversal(nums,mid + 1,r);
+
+        return root;
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) 
+    {
+        TreeNode* root = traversal(nums,0,nums.size() - 1);
+
+        return root;
+    }
+};
+
+//2>iteration
+class Solution {
+public:
+    TreeNode* traversal(vector<int>& nums,int l,int r)
+    {
+        if(l > r) return nullptr;
+        int mid = l + (r - l) / 2;
+        TreeNode* root = new TreeNode(nums[mid]);
+        root -> left = traversal(nums,l,mid - 1);
+        root -> right = traversal(nums,mid + 1,r);
+
+        return root;
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) 
+    {
+        TreeNode* root = traversal(nums,0,nums.size() - 1);
+
+        return root;
+    }
+};
