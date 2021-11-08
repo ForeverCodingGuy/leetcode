@@ -22,19 +22,40 @@ public:
 //2>iteration
 class Solution {
 public:
-    TreeNode* traversal(vector<int>& nums,int l,int r)
-    {
-        if(l > r) return nullptr;
-        int mid = l + (r - l) / 2;
-        TreeNode* root = new TreeNode(nums[mid]);
-        root -> left = traversal(nums,l,mid - 1);
-        root -> right = traversal(nums,mid + 1,r);
-
-        return root;
-    }
     TreeNode* sortedArrayToBST(vector<int>& nums) 
     {
-        TreeNode* root = traversal(nums,0,nums.size() - 1);
+        if(nums.size() == 0) return nullptr;
+        TreeNode* root = new TreeNode(0);
+        queue<TreeNode*> nodeQue;
+        queue<int> leftQue;
+        queue<int> rightQue;
+        nodeQue.push(root);
+        leftQue.push(0);
+        rightQue.push(nums.size() - 1);
+        while(!nodeQue.empty())
+        {
+            TreeNode* cur = nodeQue.front();   nodeQue.pop();
+            int l = leftQue.front();  leftQue.pop();
+            int r = rightQue.front(); rightQue.pop();
+            int mid = l + (r - l) / 2;
+            cur -> val = nums[mid];
+
+            if(l <= mid - 1)
+            {
+                cur -> left = new TreeNode(0);
+                nodeQue.push(cur -> left);
+                leftQue.push(l);
+                rightQue.push(mid - 1);
+            }
+
+            if(mid + 1 <= r)
+            {
+                cur -> right = new TreeNode(0);
+                nodeQue.push(cur -> right);
+                leftQue.push(mid + 1);
+                rightQue.push(r);
+            }
+        }
 
         return root;
     }
