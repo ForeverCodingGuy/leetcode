@@ -1,0 +1,50 @@
+//1>recursion
+class Solution {
+public:
+    int pre = 0;
+    void traversal(TreeNode* cur)
+    {
+        if(cur == nullptr) return ; 
+        traversal(cur -> right);
+        cur -> val += pre;
+        pre = cur -> val;
+        traversal(cur -> left);
+    }
+    TreeNode* convertBST(TreeNode* root) 
+    {
+        traversal(root);
+        return root;
+    }
+};
+
+//2>
+class Solution {
+public:
+    int pre = 0;
+    void traversal(TreeNode* root)
+    {
+        stack<TreeNode*> st;
+        TreeNode* cur = root;
+        while(cur != nullptr || !st.empty())
+        {
+            if(cur)
+            {
+                st.push(cur);
+                cur = cur -> right;
+            }
+            else
+            {
+                cur = st.top();
+                st.pop();
+                cur -> val += pre;
+                pre = cur -> val;
+                cur = cur -> left;
+            }
+        }
+    }
+    TreeNode* convertBST(TreeNode* root) 
+    {
+        traversal(root);
+        return root;
+    }
+};
