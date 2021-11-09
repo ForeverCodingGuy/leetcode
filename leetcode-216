@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<vector<int>> rsu;
+    vector<int> path;
+    void backtracking(int target,int k,int sum,int startIndex)
+    {
+        if(sum > target) return ;
+        if(path.size() == k)
+        {
+            if(sum == target) rsu.push_back(path);
+            return ;
+        }
+
+        for(int i = startIndex;i <= 9 - (k - path.size()) + 1;i++)
+        {
+            sum += i;
+            path.push_back(i);
+            backtracking(target,k,sum,i + 1);
+            path.pop_back();
+            sum -= i;
+        }
+
+    }
+    vector<vector<int>> combinationSum3(int k, int n) 
+    {
+        backtracking(n,k,0,1);
+        return rsu;
+    }
+};
