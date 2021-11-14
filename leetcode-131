@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<string> path;
+    vector<vector<string>> rsu;
+    bool ispali(string& s,int start,int end)
+    {
+        for(int i = start,j = end;i < j;i++, j--)
+        {
+            if(s[i] != s[j]) return false;
+        }
+        return true;
+    }
+    void backtracking(string& s,int start)
+    {
+        if(start >= s.size())
+        {
+            rsu.push_back(path);
+            return ;
+        }
+
+        for(int i = start;i < s.size();i++)
+        {
+            if(ispali(s,start,i))
+            {
+                string str = s.substr(start,i - start + 1);
+                path.push_back(str);
+            }
+            else continue;
+
+            backtracking(s,i + 1);
+            path.pop_back();
+        }
+    }
+    vector<vector<string>> partition(string s) 
+    {
+        backtracking(s,0);
+        return rsu;
+    }
+};
