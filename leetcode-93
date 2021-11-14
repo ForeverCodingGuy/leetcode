@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int pointnum = 0;
+    vector<string> rsu;
+
+    bool isvalid(string& s,int start,int end)
+    {
+        if(start > end) return false;
+
+        if(s[start] == '0' && start != end) return false;
+
+        int num = 0;
+        for(int i = start;i <= end ;i++)
+        {
+            if(s[i] > '9' || s[i] < '0') return false;
+
+            num = num * 10 + (s[i] - '0');
+            if(num > 255) return false;
+        }
+        return true;
+    }
+
+    void backtracking(string& s,int start)
+    {
+        if(pointnum == 3)
+        {
+            if(isvalid(s,start,s.size() - 1)) rsu.push_back(s);
+
+            return ;
+        }
+
+        for(int i = start;i < s.size();i++)
+        {
+            if(isvalid(s,start,i))
+            {
+                s.insert(s.begin() + i + 1,'.');
+                pointnum++;
+                backtracking(s,i + 2);
+                pointnum--;
+                s.erase(s.begin() + i + 1);
+            }
+            else break;
+        }
+    }
+    vector<string> restoreIpAddresses(string s) 
+    {
+        backtracking(s,0);
+        return rsu;
+    }
+};
