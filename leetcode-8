@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int myAtoi(string s) 
+    {
+        if(s.size() == 0) return 0;
+        int t = 0,flu = 1;
+        while(s[t] == ' ') ++ t;
+        if(s[t] == '+') ++ t;
+        else if(s[t] == '-') 
+        {
+            ++ t;
+            flu = -1;
+        }
+
+        int ans = 0,now = 0;
+        for(int i = t;i < s.size();i++)
+        {
+            if(s[i] < '0' || s[i] > '9') break;
+
+            now = s[i] - '0';
+            if(ans > 214748364 || (ans == 214748364 && now > 7)) return INT_MAX;
+            if(ans < -214748364 || (ans == -214748364 && now > 8)) return INT_MIN;
+
+            ans = ans * 10 + (flu) * now;
+        }
+        return ans;
+    }
+};
