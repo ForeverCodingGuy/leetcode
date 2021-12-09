@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) 
+    {
+        vector<int> rsu(nums.size(), -1);
+        if(nums.size() == 0) return rsu;
+        stack<int> stk;
+        stk.push(0);
+        for(int i = 1;i < nums.size() * 2;i++)
+        {
+            if(nums[i % nums.size()] <= nums[stk.top()]) stk.push(i % nums.size());
+            else
+            {
+                while(!stk.empty() && nums[i % nums.size()] > nums[stk.top()])
+                {
+                    rsu[stk.top()] = nums[i % nums.size()];
+                    stk.pop();
+                }
+                stk.push(i % nums.size());
+            }
+        }
+        return rsu;
+    }
+};
