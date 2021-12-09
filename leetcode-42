@@ -1,0 +1,61 @@
+//1> DP
+class Solution {
+public:
+    int trap(vector<int>& height) 
+    {
+        if(height.size() <= 2) return 0;
+
+        vector<int> max_left(height.size(),0);
+        vector<int> max_right(height.size(),0);
+
+        max_left[0] = height[0];
+        max_right[height.size() - 1]= height[height.size() - 1];
+
+        for(int i = 1;i < height.size();i++) max_left[i] = max(height[i], max_left[i - 1]);
+        for(int i = height.size() - 2;i >= 0;i--) 
+             max_right[i] = max(height[i],max_right[i + 1]);
+
+        int sum = 0;
+        for(int i = 0;i < height.size();i++)
+        {
+            int heg = min(max_left[i], max_right[i]) - height[i];
+            if(heg > 0) sum += heg;
+        }
+        return sum;
+    }
+};
+
+
+
+//2> 单调栈
+class Solution {
+public:
+    int trap(vector<int>& height) 
+    {
+        if(height.size() <= 2) return 0;
+
+        stack<int> stk;
+        stk.push(0);
+        int sum = 0;
+        for(int i = 1;i < height.size();i++)
+        {
+            if(height[i] <= height[stk.top()]) stk.push(i);
+            else
+            {
+                while(!stk.empty() && height[i] > height[stk.top()])
+                {
+                    int mid = stk.top();
+                    stk.pop();
+                    if(!stk.empty())
+                    {
+                        int h = min(height[i], height[stk.top()]) - height[mid];
+                        int w = i - stk.top() - 1;
+                        sum += h * w;
+                    }
+                }
+            }
+            stk.push(i);
+        }
+        return sum;
+    }
+};
