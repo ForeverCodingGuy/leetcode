@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) 
+    {
+        ListNode* pro = new ListNode(0);
+        pro -> next = head;
+        ListNode* last = pro;
+
+        while(head)
+        {
+            //1>求当前组的起始和终止位置
+            ListNode* end = getEND(head,k);
+            if(end == nullptr) break;
+
+            //2>预留下一组起始位置
+            ListNode* nextGroup = end -> next;
+            //3>实现改组反转
+            reverse(head,end -> next);
+            //4>重新连接前一组和后一组
+            last -> next = end;
+            head -> next = nextGroup;
+
+            last = head;
+            head = nextGroup;
+        }
+        return pro -> next;
+    }
+
+    ListNode* getEND(ListNode* head,int k)
+    {
+       while(head)
+       {
+           --k;
+           if(!k) return head;
+           head = head -> next;
+       }
+       return nullptr;
+    }
+
+    void reverse(ListNode* head,ListNode* stop)
+    {
+        ListNode* pre = head;
+        head = head -> next;
+        while(head != stop)
+        {
+            ListNode* tmp = head -> next;
+            head -> next = pre;
+            pre = head;
+            head = tmp;
+        }
+    }
+};
